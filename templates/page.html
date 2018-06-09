@@ -1,14 +1,31 @@
 <html>
   <div>
-    <p> Hello wankers and skankers </p>
+    <p> Hello skankers and wankers </p>
 
     <div>
       <img src="{{ image_path }}"/>
     </div>
 
     <div>
-      <button> Wanker </button>
-      <button> Skanker </button>
+      {% if result %}
+
+        <span> {{ result }} </span>
+
+        <input type="submit" value="NEXT" onclick="window.location='/';" />
+
+      {% else %}
+
+        <form action="/guess" method="post">
+          <button type="submit" name="guess" value="skanking">
+            Skanker
+          </button>
+
+          <button type="submit" name="guess" value="wanking">
+            Wanker
+          </button>
+        </form>
+
+      {% endif %}
     </div>
 
   </div>

@@ -1,27 +1,40 @@
 import random
 from pathlib import Path
 
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request
 
 
 app = Flask(__name__)
 app.secret_key = 'someLongRandomStringInnit'
 static_path = Path('static')
 
+
 @app.route('/', methods=['GET'])
 def get_next():
     if not session.get('to_do'):
-        print('REGENERATING TODO LIST')
         to_do = list(db.keys())
         random.shuffle(to_do)
         session['to_do'] = to_do
 
-    # session doesn't update if mutated in place so can't use pop
-    item = db[session['to_do'][0]]
-    session['to_do'] = session['to_do'][1:]
-    print(f"REMAINING {session['to_do']}")
+    session['current'] = session['to_do'].pop()
 
-    return render_template('page.html', image_path=static_path/item['file'])
+    return render_template(
+        'page.html',
+        image_path=static_path / db[session['current']]['file'],
+    )
+
+
+@app.route('/guess', methods=['POST'])
+def guess():
+    result = 'INCORRECT'
+    if request.form.get('guess') == db[session['current']]['class']:
+        result = 'CORRECT!'
+
+    return render_template(
+        'page.html',
+        image_path=static_path / db[session['current']]['file'],
+        result=result,
+    )
 
 
 db = {
