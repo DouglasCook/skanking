@@ -1,32 +1,40 @@
 <html>
-  <div>
-    <p> Hello skankers and wankers </p>
+  <head>
+    <title> Skanking or wanking? </title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='styles.css')}}">
+  </head>
 
-    <div>
-      <img src="{{ image_path }}"/>
+  <body>
+    <div class="container">
+      <h1> Skanking or wanking? </h1>
+
+      <img class="image" src="{{ image_path }}" />
+
+      <div class="controls">
+        {% if result %}
+
+        <div class="form-row">
+          <span> {{ result }} </span>
+          <input type="submit" value="NEXT" onclick="window.location='/';" />
+        </div>
+
+        {% else %}
+
+          <form class="form-row" action="/guess" method="post">
+            <button type="submit" name="guess" value="skanking">
+              <span> SKANKER </span>
+            </button>
+
+            <button type="submit" name="guess" value="wanking">
+              <span> WANKER </span>
+            </button>
+          </form>
+
+        {% endif %}
+      </div>
+
     </div>
-
-    <div>
-      {% if result %}
-
-        <span> {{ result }} </span>
-
-        <input type="submit" value="NEXT" onclick="window.location='/';" />
-
-      {% else %}
-
-        <form action="/guess" method="post">
-          <button type="submit" name="guess" value="skanking">
-            Skanker
-          </button>
-
-          <button type="submit" name="guess" value="wanking">
-            Wanker
-          </button>
-        </form>
-
-      {% endif %}
-    </div>
-
-  </div>
+  </body>
 </html>

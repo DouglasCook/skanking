@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: crimson;
+}
+
+.controls {
+  margin: 40px;
+}
+
+/* TODO work out why children aren't handled properly by flexbox stuff */
+.form-row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
